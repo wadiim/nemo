@@ -195,7 +195,7 @@ bool Nemo::choose_test_mode(Vec& vec) const
 	std::cout <<
 		"[1] In sequence\n"
 		"[2] Randomly\n"
-		"[3] return\n";
+		"[3] Return\n";
 
 	for (;;)
 	{
@@ -350,7 +350,7 @@ void Nemo::show_modify_wordlist_menu() const
 		"[1] Modify lines\n"
 		"[2] Erase lines\n"
 		"[3] Add lines\n"
-		"[0] return\n\n";
+		"[0] Return\n\n";
 }
 
 bool Nemo::choose_modify_mode(Vec& v) const

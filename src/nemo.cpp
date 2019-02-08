@@ -8,12 +8,10 @@
 
 void Nemo::menu() const
 {
-	for (;;)
+	do
 	{
-		clear_screen();
 		show_menu();
-		if (!choose_menu_option()) break;
-	}
+	} while (choose_menu_option());
 }
 
 void Nemo::test() const
@@ -67,19 +65,19 @@ void Nemo::modify_wordlist() const
 {
 	Vec vec;
 	File file;
+
 	if (!open_wordlist(file)) return;
 	load_file(vec, file);
 
-	for (;;)
+	do
 	{
 		clear_screen();
 		show_vector_content(vec);
 		show_modify_wordlist_menu();
-		if (!choose_modify_mode(vec)) break;
-	}
+	} while (choose_modify_mode(vec));
+
 	file.open(std::ios_base::out | std::ios_base::trunc);
-	if (vec.size())
-		for (const auto& v : vec) file << v << '\n';
+	for (const auto& v : vec) file << v << '\n';
 }
 
 void Nemo::delete_wordlist() const

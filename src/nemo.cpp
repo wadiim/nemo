@@ -103,10 +103,10 @@ void Nemo::show_menu() const
 	std::cout <<
 		"NEMO\n\n"
 		"[1] Test\n"
-		"[2] Create new wordlist\n"
-		"[3] Modify wordlist\n"
-		"[4] Show wordlist\n"
-		"[5] Delete wordlist\n"
+		"[2] Create new word list\n"
+		"[3] Modify word list\n"
+		"[4] Show word list\n"
+		"[5] Delete word list\n"
 		"[0] Exit\n";
 }
 
@@ -150,7 +150,7 @@ std::string Nemo::get_path() const
 	String path;
 
 	clear_screen();
-	std::cout << "Enter path to the wordlist: ";
+	std::cout << "Enter path to the word list: ";
 	std::cin >> path;
 	std::cin.sync();
 	std::cin.get();

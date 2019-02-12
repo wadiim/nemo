@@ -6,6 +6,7 @@ endif()
 
 set(SOURCE_FILES
     ${OS}/color.cpp
+    ${OS}/utils.cpp
     ${OS}/term.cpp
     utils.cpp
     term.cpp

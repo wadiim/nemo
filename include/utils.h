@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 
+int get_char();
 bool is_space(char ch);
 std::string strip(std::string& str);
 std::string strip(std::string&& str);

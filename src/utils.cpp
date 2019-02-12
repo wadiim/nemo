@@ -1,11 +1,12 @@
 #include "utils.h"
 #include <sstream>
 #include <fstream>
+#include <utility>
+#include <cctype>
 
 bool is_space(char ch)
 {
-	return ch == ' ' || ch == '\n' || ch == '\t' || ch == '\r' ||
-		ch == '\f' || ch == 'v';
+	return std::isspace(static_cast<unsigned char>(std::move(ch)));
 }
 
 std::string strip(std::string& str)

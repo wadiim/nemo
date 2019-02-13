@@ -1,5 +1,6 @@
 #include <windows.h>
 #include <stdexcept>
+#include "utils.h"
 
 namespace
 {
@@ -12,7 +13,7 @@ namespace
 	bool isUpper(const INPUT_RECORD& in);
 }
 
-int get_char()
+int utils::get_char()
 {
 	int retval = 0;
 	DWORD nread;

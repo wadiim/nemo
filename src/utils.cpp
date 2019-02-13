@@ -4,25 +4,25 @@
 #include <utility>
 #include <cctype>
 
-bool is_space(char ch)
+bool utils::is_space(char ch)
 {
 	return std::isspace(static_cast<unsigned char>(std::move(ch)));
 }
 
-std::string strip(std::string& str)
+std::string utils::strip(std::string& str)
 {
 	std::string s = str;
 	return strip(std::move(s));
 }
 
-std::string strip(std::string&& str)
+std::string utils::strip(std::string&& str)
 {
 	while (str.size() && is_space(str.back())) str.pop_back();
 	while (str.size() && is_space(str.front())) str.erase(str.begin());
 	return str;
 }
 
-bool is_file_exist(const std::string& path)
+bool utils::is_file_exist(const std::string& path)
 {
 	std::fstream file;
 	bool retval{ false };
@@ -33,7 +33,7 @@ bool is_file_exist(const std::string& path)
 	return retval;
 }
 
-size_t string_to_size_t(const std::string& str)
+size_t utils::string_to_size_t(const std::string& str)
 {
 	std::stringstream sstream(str);
 	size_t retval;
@@ -41,7 +41,7 @@ size_t string_to_size_t(const std::string& str)
 	return retval;
 }
 
-void unescape_character(std::string& str, const char ch)
+void utils::unescape_character(std::string& str, const char ch)
 {
 	size_t i = str.find(ch, 1);
 
@@ -52,7 +52,7 @@ void unescape_character(std::string& str, const char ch)
 	}
 }
 
-std::vector<std::string> split(const std::string& s, char delimiter)
+std::vector<std::string> utils::split(const std::string& s, char delimiter)
 {
 	std::string token;
 	std::vector<std::string> tokens;
@@ -64,7 +64,7 @@ std::vector<std::string> split(const std::string& s, char delimiter)
 	return tokens;
 }
 
-size_t find_first_nonescaped(const std::string& str, char ch)
+size_t utils::find_first_nonescaped(const std::string& str, char ch)
 {
 	size_t i = str.find(ch);
 

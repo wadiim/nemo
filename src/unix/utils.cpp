@@ -2,6 +2,7 @@
 #include <termios.h>
 #include <unistd.h>
 #include <errno.h>
+#include "utils.h"
 
 namespace
 {
@@ -11,7 +12,7 @@ namespace
 	void disable_raw_mode();
 }
 
-int get_char()
+int utils::get_char()
 {
 	int c, nread = 0;
 	enable_raw_mode();

@@ -30,7 +30,7 @@ void Nemo::test() const
 void Nemo::create_new_wordlist() const
 {
 	String path = get_path();
-	if (is_file_exist(path))
+	if (utils::is_file_exist(path))
 	{
 		std::cout <<
 			"Such file already exists.\n"
@@ -112,7 +112,7 @@ void Nemo::show_menu() const
 
 bool Nemo::choose_menu_option() const
 {
-	switch (get_char())
+	switch (utils::get_char())
 	{
 	case '1':
 		test();
@@ -140,7 +140,7 @@ bool Nemo::open_wordlist(File& f) const
 	while (!f.open(get_path(), std::ios_base::in))
 	{
 		show_invalid_path_menu();
-		if (get_char() == '0') return false;
+		if (utils::get_char() == '0') return false;
 	}
 	return true;
 }
@@ -197,7 +197,7 @@ bool Nemo::choose_test_mode(Vec& vec) const
 
 	for (;;)
 	{
-		switch (get_char())
+		switch (utils::get_char())
 		{
 		case '3': return false;
 		case '2': std::random_shuffle(vec.begin(), vec.end());
@@ -238,8 +238,8 @@ void Nemo::run_test(Vec& vec) const
 	for (const auto& v : vec)
 	{
 		std::tie(text, ans) = split_to_text_and_answers(v);
-		for (auto& a : ans) unescape_character(a, '-');
-		unescape_character(text, '-');
+		for (auto& a : ans) utils::unescape_character(a, '-');
+		utils::unescape_character(text, '-');
 
 		std::cout << text << " - ";
 		if (!std::getline(std::cin, answer))
@@ -268,7 +268,7 @@ std::string Nemo::do_line_formatting(String&& line) const
 {
 	if (line.size())
 	{
-		size_t i = find_first_nonescaped(line, '-');
+		size_t i = utils::find_first_nonescaped(line, '-');
 		if (i < line.length() - 1) line.insert(i + 1, " ");
 		if (i < line.length()) line.insert(i, " ");
 
@@ -290,25 +290,26 @@ std::string Nemo::do_line_formatting(const String& line) const
 
 Nemo::Pair Nemo::split_to_text_and_answers(const String& s) const
 {
-	size_t i = find_first_nonescaped(s, '-');
+	size_t i = utils::find_first_nonescaped(s, '-');
 	if (i < s.length())
 	{
 		return std::make_pair<String, Vec>(s.substr(0, i),
-			split(s.substr(i + 1), ';'));
+			utils::split(s.substr(i + 1), ';'));
 	}
 	return std::make_pair<String, Vec>(String(s), Vec{});
 }
 
 void Nemo::remove_extra_spaces(String & s) const
 {
-	s = strip(std::move(s));
+	s = utils::strip(std::move(s));
 	for (size_t i = 0; i < s.size(); ++i)
 	{
-		if (i && is_space(s[i]) && is_space(s[i - 1])) s.erase(i, 1);
+		if (i && utils::is_space(s[i]) && utils::is_space(s[i - 1]))
+			s.erase(i, 1);
 		if (s[i] == '-' || s[i] == ';')
 		{
-			while (i && is_space(s[i - 1])) s.erase(--i, 1);
-			while (i + 1 < s.size() && is_space(s[i + 1]))
+			while (i && utils::is_space(s[i - 1])) s.erase(--i, 1);
+			while (i + 1 < s.size() && utils::is_space(s[i + 1]))
 				s.erase(i + 1, 1);
 		}
 	}
@@ -321,7 +322,7 @@ void Nemo::show_vector_content(const Vec& v) const
 	for (size_t i = 0; i < v.size(); ++i)
 	{
 		String line = do_line_formatting(v[i]);
-		unescape_character(line, '-');
+		utils::unescape_character(line, '-');
 		std::cout << i + 1 << ". " << line << '\n';
 	}
 }
@@ -353,7 +354,7 @@ void Nemo::show_modify_wordlist_menu() const
 
 bool Nemo::choose_modify_mode(Vec& v) const
 {
-	switch (get_char())
+	switch (utils::get_char())
 	{
 	case '1':
 		modify_lines(v);
@@ -413,11 +414,11 @@ void Nemo::get_range(size_t& begin, size_t& end, const Vec& v) const
 	getline(std::cin, range);
 
 	auto i = range.find('-');
-	String beg_str = strip(range.substr(0, i));
-	String end_str = strip(range.substr(i + 1));
+	String beg_str = utils::strip(range.substr(0, i));
+	String end_str = utils::strip(range.substr(i + 1));
 
-	begin = (beg_str.empty()) ? 0 : string_to_size_t(beg_str);
-	end = (end_str.empty()) ? v.size() : string_to_size_t(end_str);
+	begin = (beg_str.empty()) ? 0 : utils::string_to_size_t(beg_str);
+	end = (end_str.empty()) ? v.size() : utils::string_to_size_t(end_str);
 
 	if (begin) --begin;
 	if (end && end < v.size()) --end;

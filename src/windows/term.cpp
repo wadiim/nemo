@@ -1,12 +1,13 @@
 #include <windows.h>
 #include <stdexcept>
+#include "term.h"
 
 namespace
 {
 	HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
 }
 
-void clear_screen()
+void term::clear_screen()
 {
 	COORD coordScreen = { 0, 0 };
 	DWORD cCharsWritten, dwConSize;
@@ -25,6 +26,6 @@ void clear_screen()
 		throw std::runtime_error("SetConsoleCursorPosition");
 }
 
-void switch_to_normal_buffer() { clear_screen(); }
+void term::switch_to_normal_buffer() { clear_screen(); }
 
-void switch_to_alternate_buffer() { clear_screen(); }
+void term::switch_to_alternate_buffer() { clear_screen(); }

@@ -2,7 +2,7 @@
 #include <cstdlib>
 #include "term.h"
 
-void term_init()
+void term::term_init()
 {
 	switch_to_alternate_buffer();
 	if (std::atexit(switch_to_normal_buffer))

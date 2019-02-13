@@ -7,7 +7,7 @@ int main()
 {
 	try
 	{
-		term_init();
+		term::term_init();
 		Nemo nemo;
 		nemo.menu();
 	}

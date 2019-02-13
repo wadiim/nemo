@@ -23,7 +23,7 @@ void Nemo::test() const
 	if (handle_empty_file(file)) return;
 	load_file(lines, file);
 	if (!choose_test_mode(lines)) return;
-	clear_screen();
+	term::clear_screen();
 	run_test(lines);
 }
 
@@ -42,7 +42,7 @@ void Nemo::create_new_wordlist() const
 	std::string line;
 	File file(path, std::ios_base::out);
 
-	clear_screen();
+	term::clear_screen();
 	while (std::getline(std::cin, line))
 	{
 		remove_extra_spaces(line);
@@ -56,7 +56,7 @@ void Nemo::show_wordlist() const
 {
 	File file;
 	if (!open_wordlist(file)) return;
-	clear_screen();
+	term::clear_screen();
 	show_file_content(file);
 	std::cin.get();
 }
@@ -71,7 +71,7 @@ void Nemo::modify_wordlist() const
 
 	do
 	{
-		clear_screen();
+		term::clear_screen();
 		show_vector_content(vec);
 		show_modify_wordlist_menu();
 	} while (choose_modify_mode(vec));
@@ -99,7 +99,7 @@ void Nemo::delete_wordlist() const
 
 void Nemo::show_menu() const
 {
-	clear_screen();
+	term::clear_screen();
 	std::cout <<
 		"NEMO\n\n"
 		"[1] Test\n"
@@ -149,7 +149,7 @@ std::string Nemo::get_path() const
 {
 	String path;
 
-	clear_screen();
+	term::clear_screen();
 	std::cout << "Enter path to the word list: ";
 	std::cin >> path;
 	std::cin.sync();
@@ -160,7 +160,7 @@ std::string Nemo::get_path() const
 
 void Nemo::show_invalid_path_menu() const
 {
-	clear_screen();
+	term::clear_screen();
 	std::cout <<
 		"Invalid path\n\n"
 		"[1] Try again\n"
@@ -189,7 +189,7 @@ bool Nemo::handle_empty_file(File& f) const
 
 bool Nemo::choose_test_mode(Vec& vec) const
 {
-	clear_screen();
+	term::clear_screen();
 	std::cout <<
 		"[1] In sequence\n"
 		"[2] Randomly\n"
@@ -393,7 +393,7 @@ void Nemo::erase_lines(Vec& vec) const
 
 void Nemo::add_lines(Vec& vec) const
 {
-	clear_screen();
+	term::clear_screen();
 	for (const auto& v : vec)
 		std::cout << do_line_formatting(v) << '\n';
 

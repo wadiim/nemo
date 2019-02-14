@@ -6,8 +6,8 @@
 
 namespace utils
 {
-	int get_char();
-	bool is_space(char ch);
+	int getch();
+	bool isspace(char ch);
 	std::string strip(std::string& str);
 	std::string strip(std::string&& str);
 	bool is_file_exist(const std::string& path);

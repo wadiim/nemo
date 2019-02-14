@@ -13,7 +13,7 @@ namespace
 	bool isUpper(const INPUT_RECORD& in);
 }
 
-int utils::get_char()
+int utils::getch()
 {
 	int retval = 0;
 	DWORD nread;

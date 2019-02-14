@@ -4,7 +4,7 @@
 #include <utility>
 #include <cctype>
 
-bool utils::is_space(char ch)
+bool utils::isspace(char ch)
 {
 	return std::isspace(static_cast<unsigned char>(std::move(ch)));
 }
@@ -17,8 +17,8 @@ std::string utils::strip(std::string& str)
 
 std::string utils::strip(std::string&& str)
 {
-	while (str.size() && is_space(str.back())) str.pop_back();
-	while (str.size() && is_space(str.front())) str.erase(str.begin());
+	while (str.size() && isspace(str.back())) str.pop_back();
+	while (str.size() && isspace(str.front())) str.erase(str.begin());
 	return str;
 }
 

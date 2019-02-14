@@ -112,7 +112,7 @@ void Nemo::show_menu() const
 
 bool Nemo::choose_menu_option() const
 {
-	switch (utils::get_char())
+	switch (utils::getch())
 	{
 	case '1':
 		test();
@@ -140,7 +140,7 @@ bool Nemo::open_wordlist(File& f) const
 	while (!f.open(get_path(), std::ios_base::in))
 	{
 		show_invalid_path_menu();
-		if (utils::get_char() == '0') return false;
+		if (utils::getch() == '0') return false;
 	}
 	return true;
 }
@@ -197,7 +197,7 @@ bool Nemo::choose_test_mode(Vec& vec) const
 
 	for (;;)
 	{
-		switch (utils::get_char())
+		switch (utils::getch())
 		{
 		case '3': return false;
 		case '2': std::random_shuffle(vec.begin(), vec.end());
@@ -304,12 +304,12 @@ void Nemo::remove_extra_spaces(String & s) const
 	s = utils::strip(std::move(s));
 	for (size_t i = 0; i < s.size(); ++i)
 	{
-		if (i && utils::is_space(s[i]) && utils::is_space(s[i - 1]))
+		if (i && utils::isspace(s[i]) && utils::isspace(s[i - 1]))
 			s.erase(i, 1);
 		if (s[i] == '-' || s[i] == ';')
 		{
-			while (i && utils::is_space(s[i - 1])) s.erase(--i, 1);
-			while (i + 1 < s.size() && utils::is_space(s[i + 1]))
+			while (i && utils::isspace(s[i - 1])) s.erase(--i, 1);
+			while (i + 1 < s.size() && utils::isspace(s[i + 1]))
 				s.erase(i + 1, 1);
 		}
 	}
@@ -354,7 +354,7 @@ void Nemo::show_modify_wordlist_menu() const
 
 bool Nemo::choose_modify_mode(Vec& v) const
 {
-	switch (utils::get_char())
+	switch (utils::getch())
 	{
 	case '1':
 		modify_lines(v);

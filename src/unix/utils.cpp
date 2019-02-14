@@ -12,7 +12,7 @@ namespace
 	void disable_raw_mode();
 }
 
-int utils::get_char()
+int utils::getch()
 {
 	int c, nread = 0;
 	enable_raw_mode();

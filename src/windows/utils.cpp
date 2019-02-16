@@ -1,11 +1,11 @@
 #include <windows.h>
 #include <stdexcept>
+#include "global.h"
 #include "utils.h"
 
 namespace
 {
 	DWORD mode;
-	HANDLE hIn = GetStdHandle(STD_INPUT_HANDLE);
 
 	void enableRawMode();
 	void disableRawMode();

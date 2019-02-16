@@ -1,11 +1,13 @@
 #include <windows.h>
 #include <stdexcept>
+#include <iostream>
+#include "buffer.h"
+#include "global.h"
 #include "term.h"
 
-namespace
-{
-	HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
-}
+HANDLE hIn = GetStdHandle(STD_INPUT_HANDLE);
+HANDLE hOut, original;
+Buffer bOut;
 
 void term::clear_screen()
 {
@@ -26,6 +28,30 @@ void term::clear_screen()
 		throw std::runtime_error("SetConsoleCursorPosition");
 }
 
-void term::switch_to_normal_buffer() { clear_screen(); }
+void term::switch_to_normal_buffer()
+{
+	if (!SetConsoleActiveScreenBuffer(original))
+		throw std::runtime_error("SetConsoleActiveScreenBuffer");
+}
 
-void term::switch_to_alternate_buffer() { clear_screen(); }
+void term::switch_to_alternate_buffer()
+{
+	original = GetStdHandle(STD_OUTPUT_HANDLE);
+	hOut = CreateConsoleScreenBuffer(
+		GENERIC_READ | GENERIC_WRITE,
+		FILE_SHARE_READ | FILE_SHARE_WRITE,
+		NULL,
+		CONSOLE_TEXTMODE_BUFFER,
+		NULL);
+
+	if (original == INVALID_HANDLE_VALUE ||
+		hOut == INVALID_HANDLE_VALUE)
+		throw std::runtime_error("CreateConsoleScreenBuffer");
+	if (!SetConsoleActiveScreenBuffer(hOut))
+		throw std::runtime_error("SetConsoleActiveScreenBuffer");
+
+	bOut.set_handle(hOut);
+	std::cout.rdbuf(&bOut);
+
+	atexit(switch_to_normal_buffer);
+}

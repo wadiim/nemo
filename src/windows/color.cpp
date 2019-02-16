@@ -1,10 +1,10 @@
 #include <windows.h>
 #include <stdexcept>
+#include "global.h"
 #include "color.h"
 
 namespace
 {
-	HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
 	WORD defaultAttributes = 0;
 
 	void set_color(int color);

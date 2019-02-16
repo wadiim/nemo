@@ -15,4 +15,8 @@ set(SOURCE_FILES
     main.cpp
 )
 
+if(WIN32)
+  set(SOURCE_FILES ${SOURCE_FILES} ${OS}/buffer.cpp)
+endif()
+
 add_executable(nemo ${SOURCE_FILES})

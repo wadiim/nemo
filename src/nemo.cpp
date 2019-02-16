@@ -421,7 +421,6 @@ void Nemo::get_range(size_t& begin, size_t& end, const Vec& v) const
 	end = (end_str.empty()) ? v.size() : utils::string_to_size_t(end_str);
 
 	if (begin) --begin;
-	if (end && end < v.size()) --end;
 	if (end > v.size()) end = v.size();
-	if (begin > end) begin = end;
+	if (begin >= end) begin = end - 1;
 }

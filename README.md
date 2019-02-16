@@ -41,7 +41,7 @@ If you select this option and enter the correct path to the file, the word list 
 3. Add lines
 4. Return
 
-After choosing one of the first two, you will be prompted to enter the range (right-open interval) in the following form: `begin-end`. The first option replaces the lines in the given range to those given by the user. The third one appends lines at the end of the word list.
+After choosing one of the first two, you will be prompted to enter the range in the following form: `begin-end`. The first option replaces the lines in the given range to those given by the user. The third one appends lines at the end of the word list.
 
 ### Show word list
 

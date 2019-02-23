@@ -4,6 +4,22 @@
 #include <vector>
 #include <string>
 
+enum key
+{
+	BACKSPACE = 8,
+	TAB,
+	ENTER = 13,
+	ESC = 27,
+	PAGE_UP = 256,
+	PAGE_DOWN,
+	END,
+	HOME,
+	ARROW_LEFT,
+	ARROW_UP,
+	ARROW_RIGHT,
+	ARROW_DOWN
+};
+
 namespace utils
 {
 	int getch();

@@ -1,3 +1,4 @@
+#include <unordered_map>
 #include <windows.h>
 #include <stdexcept>
 #include "global.h"
@@ -9,8 +10,17 @@ namespace
 
 	void enableRawMode();
 	void disableRawMode();
-	bool isAlpha(const INPUT_RECORD& in);
-	bool isUpper(const INPUT_RECORD& in);
+
+	std::unordered_map<WORD, int> keymap = {
+		{ 33, PAGE_UP },
+		{ 34, PAGE_DOWN },
+		{ 35, END },
+		{ 36, HOME },
+		{ 37, ARROW_LEFT },
+		{ 38, ARROW_UP },
+		{ 39, ARROW_RIGHT },
+		{ 40, ARROW_DOWN }
+	};
 }
 
 int utils::getch()
@@ -29,12 +39,11 @@ int utils::getch()
 		} while (input.EventType != KEY_EVENT ||
 			!input.Event.KeyEvent.bKeyDown);
 
-		if (isAlpha(input))
-		{
-			retval = input.Event.KeyEvent.wVirtualKeyCode +
-				(isUpper(input) ? 0 : 32);
-		}
-		else retval = input.Event.KeyEvent.uChar.UnicodeChar;
+		WORD keycode = input.Event.KeyEvent.wVirtualKeyCode;
+		WORD unicode = input.Event.KeyEvent.uChar.UnicodeChar;
+
+		auto key = keymap.find(keycode);
+		retval = (key != keymap.end()) ? key->second : unicode;
 	}
 
 	disableRawMode();
@@ -62,23 +71,4 @@ namespace
 		if (!SetConsoleMode(hIn, mode))
 			throw std::runtime_error("SetConsoleMode");
 	}
-
-	bool isAlpha(const INPUT_RECORD& in)
-	{
-		return in.Event.KeyEvent.wVirtualKeyCode >= 65 &&
-			in.Event.KeyEvent.wVirtualKeyCode <= 90 ||
-			in.Event.KeyEvent.wVirtualKeyCode >= 97 &&
-			in.Event.KeyEvent.wVirtualKeyCode <= 122;
-	}
-
-	bool isUpper(const INPUT_RECORD& in)
-	{
-		return in.Event.KeyEvent.wVirtualKeyCode >= 65 &&
-			in.Event.KeyEvent.wVirtualKeyCode <= 90 &&
-			in.Event.KeyEvent.dwControlKeyState == CAPSLOCK_ON &&
-			in.Event.KeyEvent.dwControlKeyState != SHIFT_PRESSED ||
-			in.Event.KeyEvent.dwControlKeyState != CAPSLOCK_ON &&
-			in.Event.KeyEvent.dwControlKeyState == SHIFT_PRESSED;
-	}
-
 }

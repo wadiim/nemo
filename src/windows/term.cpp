@@ -55,3 +55,13 @@ void term::switch_to_alternate_buffer()
 
 	atexit(switch_to_normal_buffer);
 }
+
+std::pair<size_t, size_t> term::get_window_size()
+{
+	CONSOLE_SCREEN_BUFFER_INFO csbi;
+	if (!GetConsoleScreenBufferInfo(hOut, &csbi))
+		throw std::runtime_error("GetConsoleScreenBufferInfo");
+	size_t x = csbi.srWindow.Right - csbi.srWindow.Left + 1;
+	size_t y = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;
+	return std::make_pair(x, y);
+}

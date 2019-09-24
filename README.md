@@ -1,6 +1,6 @@
 # Nemo
 
-Nemo is a command-line application for learning foreign languages.
+Nemo is a cross-platform TUI application for learning foreign languages.
 
 ## Building
 
